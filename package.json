@@ -1,0 +1,19 @@
+{
+  "name": "Community_Calendar",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ana",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "^4.13.4",
+    "body-parser": "^1.14.2",
+    "mongoose": "^4.3.7",
+    "gulp": "~3.9.0",
+    "gulp-nodemon": "^2.0.6",
+    "express-logger": "^0.0.3"
+  }
+}
