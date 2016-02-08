@@ -12,7 +12,7 @@ eventRouter.route('/')
 
 	//READ
 	.get(function(req, res) {
-		Event.find(function(err, events){
+		Event.find(function(err, events) {
 			if (err) {
 				return res.status(500).send(err);
 			}
@@ -28,7 +28,7 @@ eventRouter.route('/')
 			if (err) {
 				return res.send(err);
 		}
-		res.status(201).send(event);
+			res.status(201).send(event);
 		});
 	});
 
@@ -58,7 +58,7 @@ eventRouter.route('/:id')
 		})
 
 		//req.event.date = req.body.date;
-		event.save(function(err){
+		event.save(function(err) {
 			if (err) {
 				res.status(500).send(err);
 			}
@@ -83,9 +83,9 @@ eventRouter.route('/:id')
 
 		req.event.save(function(err) {
 			if (err) {
-				res.status(500).send(err);
+				return res.status(500).send(err);
 			}
-			res.json(req.event);
+				res.json(req.event);
 		});
 	})
 
@@ -93,9 +93,9 @@ eventRouter.route('/:id')
 	.delete(function(req, res) {
 		req.event.remove(function(err) {
 			if (err) {
-				res.status(500).send(err);
+				return res.status(500).send(err);
 			}
-			res.status(204).send('Removed the Event');
+				res.status(204).send('Removed the Event');
 		});
 	});
 
