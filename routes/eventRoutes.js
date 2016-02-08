@@ -99,4 +99,4 @@ eventRouter.route('/:id')
 		});
 	});
 
-	module.exports = eventRouter;
+module.exports = eventRouter;

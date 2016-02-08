@@ -31,7 +31,7 @@ app.get('/api', function(req, res) {
 var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
-    console.log('Running the api on port ' + port);
+	console.log('Running the api on port ' + port);
 });
 
 //module.exports = app;
