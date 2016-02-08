@@ -41,22 +41,32 @@ eventRouter.route('/:id')
 				res.status(500).send(err);
 			}
 			else {
-				res.json(req.event);
+				res.status(201).send(event);
 			}
 		});
 	})
 
 	//UPDATE
 	.put(function(req, res) {
-		req.event.title = req.body.title;
-		req.event.description = req.body.description;
-		//req.event.date = req.body.date;
-		req.event.save(function(err){
+		Event.findById(req.params.id, function(err, event) {
 			if (err) {
 				res.status(500).send(err);
 			}
 			else {
-				res.json(req.event);
+				res.json(event);
+			}
+		})
+
+		//req.event.date = req.body.date;
+		event.save(function(err){
+			if (err) {
+				res.status(500).send(err);
+			}
+			else {
+				event.title = req.body.title;
+				event.description = req.body.description;
+				event.save();
+				res.json(event);
 			}
 		});
 	})
