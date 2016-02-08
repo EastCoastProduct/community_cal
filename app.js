@@ -1,11 +1,11 @@
 'use strict';
 
 var express = require('express'),
-    bodyParser = require('body-parser'),
+	bodyParser = require('body-parser'),
 	mongoose = require('mongoose'),
 	//models
-    //Event = require('./models/eventModel'),
-    //User = require('./models/userModel'),
+	//Event = require('./models/eventModel'),
+	//User = require('./models/userModel'),
 	userRouter = require('./routes/userRoutes'),
 	eventRouter = require('./routes/eventRoutes');
 
