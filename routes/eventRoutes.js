@@ -27,49 +27,46 @@ eventRouter.route('/')
 		event.save(function(err) {
 			if (err) {
 				return res.send(err);
-		}
-			res.status(201).send(event);
+			}
+				res.status(201).send(event);
 		});
 	});
+
+eventRouter.use('/:id', function(req, res, next) {
+	Event.findById(req.params.id, function(err, event) {
+		if (err) {
+			res.status(500).send(err);
+		}
+		else if (event) {
+			req.event = event;
+			next();
+		}
+		else {
+			res.status(404).send('No Event Found');
+		}
+	});
+});
 
 eventRouter.route('/:id')
 
 	//READ
 	.get(function(req, res) {
-		Event.findById(req.params.id, function(err, event) {
-			if (err) {
-				res.status(500).send(err);
-			}
-			else {
-				res.status(201).send(event);
-			}
-		});
+		res.json(req.event);
 	})
 
 	//UPDATE
 	.put(function(req, res) {
-		Event.findById(req.params.id, function(err, event) {
-			if (err) {
-				res.status(500).send(err);
-			}
-			else {
-				res.json(event);
-			}
+			req.event.title = req.body.title;
+			req.event.description = req.body.description;
+			req.event.save(function(err) {
+				if (err) {
+					res.status(500).send(err);
+				}
+				else {
+					res.json(req.event);
+				}
+			});
 		})
-
-		//req.event.date = req.body.date;
-		event.save(function(err) {
-			if (err) {
-				res.status(500).send(err);
-			}
-			else {
-				event.title = req.body.title;
-				event.description = req.body.description;
-				event.save();
-				res.json(event);
-			}
-		});
-	})
 
 	//UPDATE some
 	.patch(function(req, res) {
@@ -83,9 +80,11 @@ eventRouter.route('/:id')
 
 		req.event.save(function(err) {
 			if (err) {
-				return res.status(500).send(err);
+				res.status(500).send(err);
 			}
+			else {
 				res.json(req.event);
+			}
 		});
 	})
 
@@ -95,7 +94,7 @@ eventRouter.route('/:id')
 			if (err) {
 				return res.status(500).send(err);
 			}
-				res.status(204).send('Removed the Event');
+			res.status(204).send('Removed the Event');
 		});
 	});
 
