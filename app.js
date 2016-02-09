@@ -6,6 +6,7 @@ var express = require('express'),
 	//models
 	//Event = require('./models/eventModel'),
 	//User = require('./models/userModel'),
+	//routes
 	userRouter = require('./routes/userRoutes'),
 	eventRouter = require('./routes/eventRoutes');
 
@@ -13,7 +14,7 @@ var express = require('express'),
 var app = express();
 
 //connect to the db
-var db = mongoose.connect('mongodb://localhost/events');
+mongoose.connect('mongodb://localhost/events');
 
 //configure body-parser
 app.use(bodyParser.json());
@@ -25,7 +26,7 @@ app.use('/api/users', userRouter);
 
 app.get('/api', function(req, res) {
 	res.send('Welcome to the API');
-})
+});
 
 // Use the `PORT` environment variable, or port 3000
 var port = process.env.PORT || 3000;

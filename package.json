@@ -6,14 +6,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "ana",
+  "author": "Ana Prpic <aprpic@gmail.com>",
   "license": "BSD-2-Clause",
   "dependencies": {
     "express": "^4.13.4",
     "body-parser": "^1.14.2",
     "mongoose": "^4.3.7",
-    "gulp": "~3.9.0",
-    "gulp-nodemon": "^2.0.6",
     "express-logger": "^0.0.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "jshint-stylish": "^2.1.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-jscs": "^3.0.2",
+    "gulp-nodemon": "~2.0.6"
+  },
+  "repository": {
+	"type": "git",
+	"url": "https://github.com/Alkaia/community_cal.git"
   }
 }

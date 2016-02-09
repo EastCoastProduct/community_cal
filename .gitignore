@@ -1,4 +1,7 @@
 # Dependency directory
 node_modules
+tests
 
 gulpfile.js
+.jscsrc
+.jshintrc

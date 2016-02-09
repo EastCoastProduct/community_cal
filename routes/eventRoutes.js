@@ -9,7 +9,6 @@ var express = require('express'),
 var eventRouter = express.Router();
 
 eventRouter.route('/')
-
 	//READ
 	.get(function(req, res) {
 		Event.find(function(err, events) {
