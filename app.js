@@ -16,6 +16,9 @@ var app = express();
 //connect to the db
 mongoose.connect('mongodb://localhost/events');
 
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+
 //configure body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

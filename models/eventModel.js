@@ -7,7 +7,7 @@ var now = new Date();
 
 var eventModel = new Schema({
 	title: {type: String, required: true},
-	description: {type: String, required: true},
+	description: {type: String, requred: true},
 	//start_date: {type: Date, default: Date.now}
 	//end_date: {type: Date, default: now.setHours(now.getHours() + 1);}
 	createdOn: {type: Date, default: Date.now}

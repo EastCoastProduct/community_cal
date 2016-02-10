@@ -1,6 +1,6 @@
 'use strict';
 
-var Event = require('../models/eventModel');
+var eventModel = require('../models/eventModel');
 
 var express = require('express'),
 	bodyParser = require('body-parser'),
@@ -11,7 +11,7 @@ var eventRouter = express.Router();
 eventRouter.route('/')
 	//READ
 	.get(function(req, res) {
-		Event.find(function(err, events) {
+		eventModel.find(function(err, events) {
 			if (err) {
 				return res.status(500).send(err);
 			}
@@ -21,7 +21,7 @@ eventRouter.route('/')
 
 	//CREATE
 	.post(function(req, res) {
-		var event = new Event(req.body);
+		var event = new eventModel(req.body);
 
 		event.save(function(err) {
 			if (err) {
@@ -32,7 +32,7 @@ eventRouter.route('/')
 	});
 
 eventRouter.use('/:id', function(req, res, next) {
-	Event.findById(req.params.id, function(err, event) {
+	eventModel.findById(req.params.id, function(err, event) {
 		if (err) {
 			res.status(500).send(err);
 		}

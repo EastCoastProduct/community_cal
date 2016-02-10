@@ -1,6 +1,6 @@
 'use strict';
 
-var User = require('../models/userModel');
+var userModel = require('../models/userModel');
 
 var express = require('express'),
 	mongoose = require('mongoose'),
@@ -10,7 +10,7 @@ var	userRouter = express.Router();
 
 userRouter.route('/')
     .get(function (req, res) {
-        User.find(function (err, user) {
+        userModel.find(function (err, user) {
             if (err) {
                 return res.send(err);
             }
@@ -19,8 +19,8 @@ userRouter.route('/')
     })
 
     .post(function (req, res) {
-        var user = new User(req.body);
-        User.save(function (err) {
+        var user = new userModel(req.body);
+        userModel.save(function (err) {
             if (err) {
                 return res.send(err);
             }
@@ -30,7 +30,7 @@ userRouter.route('/')
 
 userRouter.route('/:id')
 	.delete(function (req, res) {
-		User.remove({_id: req.params.id}, function(err, event) {
+		userModel.remove({_id: req.params.id}, function(err, event) {
 			if (err) {
 				 return res.send(err);
 			}
