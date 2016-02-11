@@ -6,20 +6,20 @@ var mongoose = require('mongoose'),
 var reMatch = /[a-zA-Z]/;
 
 //custom size validation
-var	sizeValidator = [
-		function(val) {
-			return (val.length > 0 && val.length <= 50);
-		},
-		//a custom error message:
-		'Too long!'	];
+var sizeValidator = [
+	function(val) {
+		return (val.length > 0 && val.length <= 50);
+	},
+	//a custom error message:
+	'Too long!'	];
 
 var userModel = new Schema({
-    username: {
+	username: {
 		type: String,
 		required: true,
 		validate: sizeValidator
 	},
-    password: {
+	password: {
 		type: String,
 		required: true,
 		validate: sizeValidator
@@ -34,7 +34,7 @@ var userModel = new Schema({
 			match: reMatch
 		}
 	},
-    email: {
+	email: {
 		type: String,
 		required: true
 	},
@@ -46,5 +46,16 @@ var userModel = new Schema({
 
 //alternative way
 //userModel.path('name').required(true, 'Oops! Name is required!');
+
+var userModel = new Schema({
+    username: {type: String, required: true},
+    password: {type: String, required: true},
+	name: {
+		first: String,
+		last: String
+	},
+    email: {type: String, required: true},
+	createdOn: {type: Date, default: Date.now}
+});
 
 module.exports = mongoose.model('User', userModel);

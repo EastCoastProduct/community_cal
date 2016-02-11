@@ -21,13 +21,13 @@ eventRouter.route('/')
 
 	//CREATE
 	.post(function(req, res) {
-		var event = new EventModel(req.body);
 
+		var event = new EventModel(req.body);
 		event.save(function(err) {
 			if (err) {
 				return res.send(err);
 			}
-				res.status(201).send(Event);
+				res.status(201).send(event);
 		});
 	});
 
@@ -96,7 +96,5 @@ eventRouter.route('/:id')
 			res.status(204).send('Removed the Event');
 		});
 	});
-
-
 
 module.exports = eventRouter;

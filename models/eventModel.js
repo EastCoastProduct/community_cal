@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 var now = new Date();
 
 var eventModel = new Schema({
+
 	title: {
 		type: String,
 		required: true

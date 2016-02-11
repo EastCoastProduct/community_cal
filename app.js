@@ -4,13 +4,19 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	mongoose = require('mongoose'),
 	//routes
-	authRouter = require('./routes/authRoutes'),
+	//authRouter = require('./routes/authRoutes'),
 	eventRouter = require('./routes/eventRoutes'),
 	userRouter = require('./routes/userRoutes'),
 	//
 	cookieParser = require('cookie-parser'),
-	session = require('express-session');
+	session = require('express-session'),
 
+	//models
+	//Event = require('./models/eventModel'),
+	//User = require('./models/userModel'),
+	//routes
+	userRouter = require('./routes/userRoutes'),
+	eventRouter = require('./routes/eventRoutes');
 
 //Create the Express app
 var app = express();
@@ -34,9 +40,15 @@ require('./config/passport')(app);
 //route middleware
 app.use('/events', eventRouter);
 app.use('/users', userRouter);
-app.use('/auth', authRouter);
+//app.use('/auth', authRouter);
 
-app.get('/', function(req, res) {
+//app.get('/', function(req, res) {}
+
+//route middleware
+app.use('/api/events', eventRouter);
+app.use('/api/users', userRouter);
+
+app.get('/api', function(req, res) {
 	res.send('Welcome to the API');
 });
 
@@ -47,4 +59,4 @@ app.listen(port, function() {
 	console.log('Running the api on port ' + port);
 });
 
-module.exports = app;
+//module.exports = app;
