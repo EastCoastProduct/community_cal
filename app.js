@@ -9,7 +9,7 @@ var express = require('express'),
 	userRouter = require('./routes/userRoutes'),
 	//
 	cookieParser = require('cookie-parser'),
-	session = require('express-session');
+	session = require('express-session'),
 
 	//models
 	//Event = require('./models/eventModel'),
@@ -40,9 +40,9 @@ require('./config/passport')(app);
 //route middleware
 app.use('/events', eventRouter);
 app.use('/users', userRouter);
-app.use('/auth', authRouter);
+//app.use('/auth', authRouter);
 
-app.get('/', function(req, res) {
+//app.get('/', function(req, res) {}
 
 //route middleware
 app.use('/api/events', eventRouter);
@@ -58,7 +58,5 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
 	console.log('Running the api on port ' + port);
 });
-
-module.exports = app;
 
 //module.exports = app;
