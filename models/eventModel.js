@@ -24,3 +24,4 @@ var eventModel = new Schema({
 });
 
 module.exports = mongoose.model('Event', eventModel);
+
