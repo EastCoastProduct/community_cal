@@ -3,6 +3,14 @@
 var express = require('express'),
 	bodyParser = require('body-parser'),
 	mongoose = require('mongoose'),
+	//routes
+	//authRouter = require('./routes/authRoutes'),
+	eventRouter = require('./routes/eventRoutes'),
+	userRouter = require('./routes/userRoutes'),
+	//
+	cookieParser = require('cookie-parser'),
+	session = require('express-session');
+
 	//models
 	//Event = require('./models/eventModel'),
 	//User = require('./models/userModel'),
@@ -23,6 +31,19 @@ db.on('error', console.error.bind(console, 'connection error:'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(cookieParser());
+app.use(session({secret: 'comcal', saveUninitialized: true, resave: true}));
+
+//configure passport
+require('./config/passport')(app);
+
+//route middleware
+app.use('/events', eventRouter);
+app.use('/users', userRouter);
+app.use('/auth', authRouter);
+
+app.get('/', function(req, res) {
+
 //route middleware
 app.use('/api/events', eventRouter);
 app.use('/api/users', userRouter);
@@ -37,5 +58,7 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
 	console.log('Running the api on port ' + port);
 });
+
+module.exports = app;
 
 //module.exports = app;
