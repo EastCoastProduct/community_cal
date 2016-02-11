@@ -47,15 +47,4 @@ var userModel = new Schema({
 //alternative way
 //userModel.path('name').required(true, 'Oops! Name is required!');
 
-var userModel = new Schema({
-    username: {type: String, required: true},
-    password: {type: String, required: true},
-	name: {
-		first: String,
-		last: String
-	},
-    email: {type: String, required: true},
-	createdOn: {type: Date, default: Date.now}
-});
-
 module.exports = mongoose.model('User', userModel);
