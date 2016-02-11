@@ -7,11 +7,11 @@ var reMatch = /[a-zA-Z]/;
 
 //custom size validation
 var sizeValidator = [
-		function(val) {
-			return (val.length > 0 && val.length <= 50);
-		},
-		//a custom error message:
-		'Too long!'	];
+	function(val) {
+		return (val.length > 0 && val.length <= 50);
+	},
+	//a custom error message:
+	'Too long!'	];
 
 var userModel = new Schema({
 	username: {
