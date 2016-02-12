@@ -13,10 +13,12 @@ var express = require('express'),
 
 	//models
 	//Event = require('./models/eventModel'),
-	//User = require('./models/userModel'),
+	User = require('./models/userModel'),
 	//routes
 	userRouter = require('./routes/userRoutes'),
-	eventRouter = require('./routes/eventRoutes');
+	eventRouter = require('./routes/eventRoutes'),
+	//auth
+	passport = require('passport');
 
 //Create the Express app
 var app = express();
@@ -34,23 +36,18 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(session({secret: 'comcal', saveUninitialized: true, resave: true}));
 
-//configure passport
-require('./config/passport')(app);
-
 //route middleware
 app.use('/events', eventRouter);
 app.use('/users', userRouter);
 //app.use('/auth', authRouter);
 
-//app.get('/', function(req, res) {}
-
-//route middleware
-app.use('/api/events', eventRouter);
-app.use('/api/users', userRouter);
-
-app.get('/api', function(req, res) {
+app.get('/', function(req, res) {
 	res.send('Welcome to the API');
 });
+
+// ... continue with Express.js app initialization ...
+app.use(require('connect-flash')()); // see the next section
+app.use(passport.initialize());
 
 // Use the `PORT` environment variable, or port 3000
 var port = process.env.PORT || 3000;

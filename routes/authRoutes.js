@@ -1,19 +1,19 @@
 'use strict';
 
-var UserModel = require('../models/userModel');
+var userModel = require('../models/userModel');
 
 var express = require('express'),
 	mongoose = require('mongoose'),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser'),
+	passport = require('passport');
 
 var authRouter = express.Router();
 
-authRouter.route('/signUp')
-	.post(function (req, res) {
-		req.login(req.body, function() {
-			res.redirect('/auth/profile');
-		});
-	});
+authRouter.post('/login', passport.authenticate('local', {
+    successRedirect: '/events',
+    failureRedirect: '/login',
+    failureFlash: true
+}));
 
 
 authRouter.route('/profile')
