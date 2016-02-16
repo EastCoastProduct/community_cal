@@ -11,14 +11,13 @@ var authRouter = express.Router();
 
 authRouter.post('/login', passport.authenticate('local', {
     successRedirect: '/events',
-    failureRedirect: '/login',
+    failureRedirect: '/loginFailure',
     failureFlash: true
 }));
 
-
-authRouter.route('/profile')
-	.get(function (req, res) {
-		res.json(req.user);
-	});
+//authRouter.route('/profile')
+//	.get(function (req, res) {
+//		res.json(req.user);
+//	});
 
 module.exports = authRouter;

@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+	Schema = mongoose.Schema;
 
 var now = new Date();
 
@@ -23,5 +23,4 @@ var eventModel = new Schema({
 	}
 });
 
-module.exports = mongoose.model('Event', eventModel);
-
+module.exports = mongoose.model('Event', eventModel, 'collection');

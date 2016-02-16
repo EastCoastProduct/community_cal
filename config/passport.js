@@ -15,4 +15,5 @@ module.exports = function(app) {
 	});
 
 	require('./local.strategy');
+	require('connect-flash')();
 };

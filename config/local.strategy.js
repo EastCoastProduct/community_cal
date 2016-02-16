@@ -3,30 +3,28 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	passport = require('passport'),
-	LocalStrategy = require('passport-local');
+	LocalStrategy = require('passport-local').Strategy;
 
+// load the user model
 var User = require('../models/userModel');
 
 var authStrategy = new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-}, function(email, password, done) {
-    User.authenticate(email, password, function(error, user){
-        // You can write any kind of message you'd like.
-        // The message will be displayed on the next page the user visits.
-        // We're currently not displaying any success message for logging in.
-        done(error, user, error ? { message: error.message } : null);
-    });
+	function(email, password, done) {
+		User.authenticate(email, password, function(err, user){
+			// Any kind of message
+			done(err, user, err ? { message: err.message } : null);
+		});
+	}
 });
 
 var authSerializer = function(user, done) {
-    done(null, user.id);
+	done(null, user);
 };
 
 var authDeserializer = function(id, done) {
-    User.findById(id, function(error, user) {
-        done(error, user);
-    });
+	User.findById(id, function(err, user) {
+		done(err, user);
+	});
 };
 
 passport.use(authStrategy);

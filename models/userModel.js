@@ -64,18 +64,19 @@ var userModel = new Schema({
 //userModel.path('name').required(true, 'Oops! Name is required!');
 
 userModel.statics.authenticate = function(email, password, callback) {
-    this.findOne({ email: email }, function(error, user) {
-        if (user && Hash.verify(password, user.password)) {
-            callback(null, user);
-        } else if (user || !error) {
-            // Email or password is invalid (no mongodb error)
-            error = new Error('Email address or password is invalid. Please try again.');
-            callback(error, null);
-        } else {
-            // Something bad happened with mongodb
-            callback(error, null);
-        }
-    });
+	this.findOne({ email: email }, function(error, user) {
+		if (user && Hash.verify(password, user.password)) {
+			callback(null, user);
+		} else if (user || !error) {
+		// Email or password is invalid (no mongodb error)
+		error = new Error('Email address or password is invalid. Please try again.');
+			callback(error, null);
+		}
+		else {
+		// Something bad happened with mongodb
+			callback(error, null);
+		}
+	});
 };
 
-module.exports = mongoose.model('User', userModel);
+module.exports = mongoose.model('User', userModel, 'collection');
