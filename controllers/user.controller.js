@@ -26,7 +26,7 @@ exports.register = function (req, res) {
 exports.login = function (req, res, next) {
 	req.body.email = req.body.email.toLowerCase();
 
-	User.authenticate()(req.body.email, req.body.password, function (err, user, options) {
+	User.authenticate()(req.body.email, req.body.password, req.body.name, function (err, user, options) {
 		if (err) {
 			return next(err);
 		}

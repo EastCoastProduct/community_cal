@@ -46,6 +46,7 @@ exports.remove = function(req, res) {
 		_id: req.params.id
 	}, function(err, event) {
 		if (err) {
+			console.log(err);
 			return res.send(err);
 		}
 		else {
@@ -56,11 +57,25 @@ exports.remove = function(req, res) {
 };
 
 exports.edit = function (req, res) {
-	EventModel.update({id: req.params.id}, req.body, function (err) {
+
+	EventModel.findOne({
+		_id: req.params.id
+	}, function(err, event) {
+		
+		event.title = req.body.title;
+		event.description = req.body.description;
+
 		if (err) {
+			console.log(err);
 			return res.send(err);
 		}
-		res.status(202).send('Updated the Event');
+		else {
+			event.save();
+			res.send({
+				message: 'Updated the Event',
+				event: event
+			});
+		}
 	});
 };
 
