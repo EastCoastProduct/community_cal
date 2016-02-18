@@ -17,7 +17,9 @@ mongoose.connect('mongodb://localhost/comcal');
 
 //set up express application
 app.use(morgan('dev')); // log every request to the console
+
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(__dirname + '/views'));
 
@@ -30,5 +32,5 @@ var port = process.env.PORT || 3000;
 
 //======================================================================
 app.listen(port, function() {
-	console.log('Running the server on http://localhost ' + port);
+	console.log('Running the server on http://localhost:' + port);
 });

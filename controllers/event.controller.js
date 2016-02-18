@@ -8,15 +8,10 @@ exports.create = function (req, res) {
 
 	event.save(function (err) {
 		if (err) {
-			return res.send({
-				message: err
-			});
+			return res.send(err);
 		}
 		else {
-			res.status(201).send({
-				success: true,
-				event: event
-			});
+			res.status(201).send({event: event});
 		}
 	});
 };
@@ -24,41 +19,38 @@ exports.create = function (req, res) {
 exports.list = function (req, res) {
 	EventModel.find(function (err, data) {
 		if (err) {
-			res.status(500).send(err);
+			return res.send(err);
 		}
-		res.json({
-			success: true,
-			event: data
-		});
+		res.json({event: data});
 	});
 };
 
 
 exports.findById = function (req, res) {
-	EventModel.findById({
+	EventModel.findOne({
 		_id: req.params.id
 	}, function (err, response) {
-		if (err) {
-			res.send(err);
+		if (err || !response) {
+			res.status(404).send({message: 'Event not found'});
 		}
 		else {
-			res.send({
-				success: true,
-				event: response
-			});
+			res.send({event: response});
 		}
 	});
 };
 
 exports.remove = function(req, res) {
-	EventModel.findById({
+	console.log(req.params.id);
+
+	EventModel.findOne({
 		_id: req.params.id
-	}, function(err) {
+	}, function(err, event) {
 		if (err) {
-			return res.status(500).send(err);
+			return res.send(err);
 		}
 		else {
-			res.status(204).send('Removed the Event');
+			event.remove();
+			res.send({message: 'Removed the Event'});
 		}
 	});
 };
@@ -75,18 +67,17 @@ exports.update = function (req, res) {
 exports.findByName = function (req, res) {
 	EventModel.findOne({
 		name: req.params.name
-		}, function (error, response) {
-			if (error || !response) {
-				res.status(404).send({
-					status: 404,
-					message: 'Event not found'
-				});
+		}, function (err, response) {
+			if (err || !response) {
+				res.status(404).send({message: 'Event not found'});
 			}
 			else {
-				res.send({
-					success: true,
-					event: response
-				});
+				res.send({event: response});
 			}
 		});
+};
+
+exports.logout = function (req, res) {
+	req.logout();
+	res.redirect('/');
 };

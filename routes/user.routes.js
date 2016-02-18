@@ -3,6 +3,7 @@
 var User = require('../models/model.user');
 
 var users = require('../controllers/user.controller'),
+	mongoose = require('mongoose'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	cookieParser = require('cookie-parser'),
@@ -12,9 +13,13 @@ var users = require('../controllers/user.controller'),
 module.exports = function (app) {
 
 	//initialize passport
-	passport.use(new LocalStrategy(User.authenticate()));
+	app.use(passport.initialize());
+	app.use(passport.session());
 
-	// use static serialize and deserialize of model for passport session support
+	passport.use(new LocalStrategy(User.authenticate()));//here I get an error 'not a function?!'
+	//passport.use(User.createStrategy()); //alternative
+
+	//static serialize and deserialize of model for passport session support
 	passport.serializeUser(User.serializeUser());
 	passport.deserializeUser(User.deserializeUser());
 
@@ -24,13 +29,13 @@ module.exports = function (app) {
 		saveUninitialized: true,
 		resave: true
 	}));
-	app.use(passport.initialize());
-	app.use(passport.session());
 
 	//routes
 	app.route('/register').post(users.register);
-	app.route('/login').post(users.login);
-	app.route('/login').get(users.getlogin);
-	app.route('/:id').get(users.get);
+	app.route('/login').post(users.login).get(users.getlogin);
+	app.route('/user/:name').get(users.findByName);
+	app.route('/logout').get(users.logout);
+	//app.route('/:id').get(users.getById);
+	//app.route('/:name').get(users.findByName);
 
 };

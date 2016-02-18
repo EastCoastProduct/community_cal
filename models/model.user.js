@@ -53,5 +53,6 @@ var UserSchema = new Schema ({
 
 //alternative way of handling errors
 //userModel.path('name').required(true, 'Oops! Name is required!');
+UserSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('User', UserSchema, 'collection');
