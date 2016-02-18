@@ -5,7 +5,6 @@ var mongoose = require('mongoose'),
 	passportLocalMongoose = require('passport-local-mongoose'),
 	validate = require('mongoose-validator');
 
-
 //custom size validation
 var namesValidator = [
 	validate({
@@ -29,10 +28,11 @@ var emailValidator = [
 ];
 
 var UserSchema = new Schema ({
-	email: {
+	username: {
 		type: String,
 		required: true,
 		unique: true,
+		lowercase: true,
 		validate: emailValidator
 	},
 	password: {

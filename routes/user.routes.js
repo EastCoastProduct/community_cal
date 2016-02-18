@@ -10,13 +10,13 @@ var mongoose = require('mongoose'),
 
 module.exports = function (app) {
 	//console.log(1, app);
-	var	users = require('../controllers/user.controller');
+	var users = require('../controllers/user.controller');
 
 	//initialize passport
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	//passport.use(new LocalStrategy(UserModel.authenticate()));//here I get an error 'not a function?!'
+	//passport.use(new LocalStrategy(UserModel.authenticate()));
 	passport.use(UserModel.createStrategy()); //first this
 
 	//static serialize and deserialize of model for passport session support

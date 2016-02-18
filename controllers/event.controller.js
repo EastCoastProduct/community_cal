@@ -61,7 +61,7 @@ exports.edit = function (req, res) {
 	EventModel.findOne({
 		_id: req.params.id
 	}, function(err, event) {
-		
+
 		event.title = req.body.title;
 		event.description = req.body.description;
 
@@ -73,7 +73,7 @@ exports.edit = function (req, res) {
 			event.save();
 			res.send({
 				message: 'Updated the Event',
-				event: event
+				Event: event
 			});
 		}
 	});
