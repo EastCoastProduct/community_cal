@@ -11,7 +11,7 @@ exports.create = function (req, res) {
 			return res.send(err);
 		}
 		else {
-			res.status(201).send({event: event});
+			res.send({event: event});
 		}
 	});
 };
@@ -40,7 +40,7 @@ exports.findById = function (req, res) {
 };
 
 exports.remove = function(req, res) {
-	console.log(req.params.id);
+	//console.log(req.params.id);
 
 	EventModel.findOne({
 		_id: req.params.id

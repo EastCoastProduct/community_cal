@@ -2,14 +2,14 @@
 
 var User = require('../models/model.user');
 
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 
 exports.register = function (req, res) {
-	console.log('registering: ' + req.body.firstname);
+	console.log('registering: ' + req.body.name);
 
 	User.register(new User({
 		email: req.body.email,
-		firstname: req.body.firstname,
+		name: req.body.name,
 		password: req.body.password
 		}), function (err, user) {
 		if (err) {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./tests/event.test.js"
   },
   "author": "Ana Prpic <aprpic@gmail.com>",
   "license": "BSD-2-Clause",

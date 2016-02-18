@@ -34,3 +34,13 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
 	console.log('Running the server on http://localhost:' + port);
 });
+
+// User.find({}).exec(function (err, users) {
+// 	if (users.length === 0) {
+// 		User.register(new User({
+// 			email: 'admin@example.com',
+// 			password: 'password',
+// 			name: 'admin',
+// 		}));
+// 	}
+// });
