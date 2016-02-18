@@ -55,7 +55,7 @@ exports.remove = function(req, res) {
 	});
 };
 
-exports.update = function (req, res) {
+exports.edit = function (req, res) {
 	EventModel.update({id: req.params.id}, req.body, function (err) {
 		if (err) {
 			return res.send(err);
@@ -75,9 +75,4 @@ exports.findByName = function (req, res) {
 				res.send({event: response});
 			}
 		});
-};
-
-exports.logout = function (req, res) {
-	req.logout();
-	res.redirect('/');
 };

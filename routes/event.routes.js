@@ -1,8 +1,9 @@
 'use strict';
 
-var events = require('../controllers/event.controller');
-
 module.exports = function (app) {
+
+	var events = require('../controllers/event.controller');
+	var EventModel = require('../models/model.event');
 
 	app.route('/event').post(events.create).get(events.list);
 

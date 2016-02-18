@@ -9,9 +9,9 @@ exports.register = function (req, res) {
 
 	User.register(new User({
 		email: req.body.email,
-		firstname: req.body.firstname
-		}),
-		req.body.password, function (err, user) {
+		firstname: req.body.firstname,
+		password: req.body.password
+		}), function (err, user) {
 		if (err) {
 			console.log(err);
 			return res.send(err);
@@ -64,4 +64,9 @@ exports.findByName = function (req, res) {
 				res.send({user: response});
 			}
 		});
+};
+
+exports.logout = function (req, res) {
+	req.logout();
+	res.redirect('/');
 };

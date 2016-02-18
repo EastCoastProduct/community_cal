@@ -40,10 +40,8 @@ var UserSchema = new Schema ({
 		required: true
 	},
 	name: {
-		first: {
-			type: String,
-			validate: namesValidator
-		}
+		type: String,
+		validate: namesValidator
 	},
 	createdOn: {
 		type: Date,
