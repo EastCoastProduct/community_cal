@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "./tests/event.test.js"
+    "test": "make test"
   },
   "author": "Ana Prpic <aprpic@gmail.com>",
   "license": "BSD-2-Clause",

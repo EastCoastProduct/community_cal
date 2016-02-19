@@ -16,8 +16,8 @@ module.exports = function (app) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	//passport.use(new LocalStrategy(UserModel.authenticate()));
-	passport.use(UserModel.createStrategy()); //first this
+	passport.use(new LocalStrategy(UserModel.authenticate()));
+	//passport.use(UserModel.createStrategy()); //first this
 
 	//static serialize and deserialize of model for passport session support
 	passport.serializeUser(UserModel.serializeUser());
@@ -33,7 +33,7 @@ module.exports = function (app) {
 	//routes
 	app.route('/register').post(users.register);
 	app.route('/login').post(users.login).get(users.getLogin);
-	//app.route('/user/:name').get(users.findByName);
+	app.route('/user/:name').get(users.findByName);
 	app.route('/logout').get(users.logout);
 	//app.route('/user/:id').get(users.getById);
 
