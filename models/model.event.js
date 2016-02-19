@@ -6,17 +6,17 @@ var mongoose = require('mongoose'),
 
 var now = new Date();
 
-var alphanumLenValidator = [
-	validate({
-		validator: 'isAlphanumeric',
-		message: 'Title should contain alpha-numeric characters only'
-	}),
-	validate({
-		validator: 'isLength',
-		argument: [1, 150],
-		message: 'Title should contain text, but not longer than {ARGS[0]} characters'
-	})
-];
+// var alphanumLenValidator = [
+// 	validate({
+// 		validator: 'isAlphanumeric',
+// 		message: 'Title should contain alpha-numeric characters only'
+// 	}),
+// 	validate({
+// 		validator: 'isLength',
+// 		argument: [1, 150],
+// 		message: 'Title should contain text, but not longer than {ARGS[0]} characters'
+// 	})
+// ];
 
 var EventSchema = new Schema({
 

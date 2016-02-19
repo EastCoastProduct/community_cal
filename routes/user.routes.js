@@ -31,7 +31,7 @@ module.exports = function (app) {
 	}));
 
 	//routes
-	app.route('/register').post(users.register);
+	//app.route('/register').post(users.register);
 	app.route('/login').post(users.login);
 	app.route('/login').get(users.getLogin);
 	app.route('/user/:name').get(users.findByName);

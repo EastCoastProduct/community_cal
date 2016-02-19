@@ -32,3 +32,4 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
 	console.log('Running the server on http://localhost:' + port);
 });
+module.exports = app;

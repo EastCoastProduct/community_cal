@@ -6,8 +6,9 @@ module.exports = function (app) {
 	//var EventModel = require('../models/model.event');
 
 	app.route('/event').post(events.create).get(events.list);
-
-	app.route('/event/:id').get(events.findById).put(events.edit);
-	app.route('/event/:id').delete(events.remove);
 	app.route('/event/:name').get(events.findByName);
+
+	app.route('/event/:id').get(users.getLogin, events.findById);
+	app.route('/event/:id').put(users.getLogin, events.edit);
+	app.route('/event/:id').delete(users.getLogin, events.remove);
 };
