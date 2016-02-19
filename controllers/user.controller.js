@@ -12,47 +12,49 @@ exports.register = function (req, res) {
 		password: req.body.password
 	}),	req.body.name, function (err, user) {
 		if (err) {
-			console.log(err);
+			console.log('err' + err);
 			return res.send(err);
 		}
 		else {
 			res.send({user: user});
 		}
 		//immediately log in the registered user
-		user.authenticate('local')(req, res, function () {
-			res.redirect('/');
-		});
+		//user.authenticate()(req.body.username, req.body.password, function () {
+			//res.redirect('/login');
+		//});
 	});
 };
 
 exports.login = function (req, res) {
 	//console.log('username: ' + req.body.username);
 	//console.log('password: ' + req.body.password);
+	var username = req.body.username;
+	var password = req.body.password;
 
-	User.authenticate()(req.body.username, req.body.password, function (err, user, options) {
+	User.authenticate()(username, password, function (err) {
 		if (err) {
 			res.send(err);
 		}
-		if (!user) {
+		if (!username || !password) {
 			res.send({
-				message: options.message
+				message: 'Incorrect password or username'
 			});
 		}
 		else {
-			req.login(user, function (err) {
+			req.login(username, function (err) {
 				res.send({
-					user: user
+					user: username
 				});
 			});
-		//return res.redirect('/');
+		//return res.redirect('/user');
 		}
 	});
 };
 
 exports.getLogin = function (req, res) {
-	console.log(req.user);
 
 	if (req.user) {
+		//console.log('req.user: ' + req.user);
 		return res.send({
 			user: req.user
 		});
@@ -64,6 +66,7 @@ exports.getLogin = function (req, res) {
 
 exports.findByName = function (req, res) {
 	console.log('name: ' + req.body.name);
+
 	User.findOne({
 		name: req.body.name
 		}, function (err, response) {
@@ -83,5 +86,5 @@ exports.findByName = function (req, res) {
 
 exports.logout = function (req, res) {
 	req.logout();
-	res.redirect('/');
+	//res.redirect('/');
 };

@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 
 
 module.exports = function (app) {
-	//console.log(1, app);
+
 	var users = require('../controllers/user.controller');
 
 	//initialize passport
@@ -32,7 +32,8 @@ module.exports = function (app) {
 
 	//routes
 	app.route('/register').post(users.register);
-	app.route('/login').post(users.login).get(users.getLogin);
+	app.route('/login').post(users.login);
+	app.route('/login').get(users.getLogin);
 	app.route('/user/:name').get(users.findByName);
 	app.route('/logout').get(users.logout);
 	//app.route('/user/:id').get(users.getById);

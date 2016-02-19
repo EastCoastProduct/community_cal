@@ -91,3 +91,8 @@ exports.findByName = function (req, res) {
 			}
 		});
 };
+
+exports.ensureAuthenticated = function (req, res, next) {
+	if (req.isAuthenticated()) { return next(); }
+	res.send('Not logged in');
+};
