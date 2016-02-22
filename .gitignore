@@ -1,7 +1,6 @@
 # Dependency directory
 
 node_modules/
-tests/
 
 routes/authRoutes.js
 
