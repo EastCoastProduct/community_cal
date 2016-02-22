@@ -43,7 +43,6 @@ module.exports = function (app) {
 		.get(function (req, res) {
 			res.sendfile('views/login.html');
 		})
-		.get(users.login)
 		.post(users.login);
 	//app.route('/login').get(users.getLogin);
 	app.route('/user/:name')

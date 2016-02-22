@@ -37,6 +37,7 @@ var UserSchema = new Schema ({
 	},
 	password: {
 		type: String,
+		min: 5,
 		required: true
 	},
 	name: {

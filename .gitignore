@@ -1,16 +1,12 @@
 # Dependency directory
-<<<<<<< HEAD
+
 node_modules/
 tests/
 
 routes/authRoutes.js
 
 gulp*
-=======
-node_modules
-tests
+coverage
 
-gulpfile.js
->>>>>>> 99d35183bd726045e736d85034fb42f6b899f915
 .jscsrc
 .jshintrc

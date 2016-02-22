@@ -20,28 +20,34 @@ exports.register = function (req, res) {
 	});
 };
 
-exports.login = function (req, res, next) {
+var authenticate = function (username, password, done) {
+	console.log('username: ' + username);
 
-	UserModel.authenticate()(req.body.username, req.body.password, function (err, user, options) {
+	UserModel.findOne({username: username, password: password}, function(err, user) {
+		if (err) {return done(err);}
 
-		if (err) {return res.json(err);}
-
-		console.log('user: ' + user);//false?!
-
-		if (user === false) {
-			res.json( {
-				message: options.message,
-				successful: false
-			});
+		if (!user) {
+			return done(err, false);
 		}
-		else {
-			req.login(user, function (err) {
-				res.json( {
-					user: user,
-					successful: true
-				});
-			});
+		if (user.password !== password) {
+			return done(err, false);
 		}
+
+		return done(null, user);
+	});
+};
+
+exports.login = function (req, res) {
+
+	authenticate(req.body.username, req.body.password, function (err, user) {
+
+		req.login(user, function (err) {
+			console.log('req.user ' + req.user);
+			if (req.user !== null) {
+				res.send({success: false});
+				res.redirect('/login');
+			}
+		});
 	});
 };
 
@@ -52,7 +58,7 @@ exports.getLogin = function (req, res) {
 		return res.send({successful: true, user: req.user});
 	}
 
-	res.json({success: false, message: 'Not authorized. Please, log in to see this page.'});
+	res.send({success: false, message: 'Not authorized. Please, log in to see this page.'});
 	res.redirect('/login');
 };
 

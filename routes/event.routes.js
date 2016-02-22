@@ -9,10 +9,11 @@ module.exports = function (app) {
 		.post(events.create)
 		.get(events.list);
 
-	app.route('/event/:name')
-		.get(events.findByName);
+	// app.route('/event/:name')
+	// 	.get(events.findByName);
 
-	app.route('/event/:id').get(events.findById);
+	app.route('/event/:id')
+		.get(events.findById);
 	app.route('/event/:id')
 		.delete(events.remove)
 		.put(events.edit);
