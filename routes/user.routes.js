@@ -1,7 +1,10 @@
 'use strict';
 
 var mongoose = require('mongoose'),
+
 	UserModel = require('../models/model.user'),
+	users = require('../controllers/user.controller'),
+
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	cookieParser = require('cookie-parser'),
@@ -10,14 +13,12 @@ var mongoose = require('mongoose'),
 
 module.exports = function (app) {
 
-	var users = require('../controllers/user.controller');
-
 	//initialize passport
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	passport.use(new LocalStrategy(UserModel.authenticate()));
-	//passport.use(UserModel.createStrategy()); //first this
+	//passport.use(new LocalStrategy(UserModel.authenticate()));
+	passport.use(UserModel.createStrategy()); //first this
 
 	//static serialize and deserialize of model for passport session support
 	passport.serializeUser(UserModel.serializeUser());
@@ -31,11 +32,24 @@ module.exports = function (app) {
 	}));
 
 	//routes
-	//app.route('/register').post(users.register);
-	app.route('/login').post(users.login);
-	app.route('/login').get(users.getLogin);
-	app.route('/user/:name').get(users.findByName);
-	app.route('/logout').get(users.logout);
+
+	app.route('/register')
+		.get(function (req, res) {
+			res.sendfile('views/register.html');
+		})
+		.post(users.register);
+
+	app.route('/login')
+		.get(function (req, res) {
+			res.sendfile('views/login.html');
+		})
+		.get(users.login)
+		.post(users.login);
+	//app.route('/login').get(users.getLogin);
+	app.route('/user/:name')
+		.get(users.findByName);
+	app.route('/logout')
+		.get(users.logout);
 	//app.route('/user/:id').get(users.getById);
 
 };

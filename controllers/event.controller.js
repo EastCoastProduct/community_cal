@@ -39,14 +39,11 @@ exports.remove = function(req, res) {
 	EventModel.findOne({
 		_id: req.params.id
 	}, function(err, event) {
-		if (!users.getLogin) {res.json({error: 'Please, log in!'});
+		event.remove(function (err) {
+			if (err) {return res.json(err);}
 
-			event.remove(function (err) {
-				if (err) {return res.send(err);}
-
-				res.json('Event removed');
+			res.json('Event removed');
 			});
-		}
 	});
 };
 
