@@ -20,24 +20,26 @@ exports.register = function (req, res) {
 	});
 };
 
-var authenticate = function (username, password, done) {
-	console.log('username: ' + username);
-
-	UserModel.findOne({username: username, password: password}, function(err, user) {
-		if (err) {return done(err);}
-
-		if (!user) {
-			return done(err, false);
-		}
-		if (user.password !== password) {
-			return done(err, false);
-		}
-
-		return done(null, user);
-	});
-};
 
 exports.login = function (req, res) {
+	function authenticate (username, password, next) {
+		console.log('username: ' + username);
+
+		UserModel.findOne({username: username, password: password}, function(err, user) {
+			if (err) {return next(err);}
+
+			if (!user) {
+				return next(err, false);
+			}
+			if (user.password !== password) {
+				return next(err, false);
+			}
+
+			console.log('user: ' + user);
+			return next(null, user);
+
+		});
+	}
 
 	authenticate(req.body.username, req.body.password, function (err, user) {
 
