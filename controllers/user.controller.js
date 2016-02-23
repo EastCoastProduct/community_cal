@@ -15,19 +15,22 @@ exports.register = function (req, res) {
 			return res.json(err);
 		}
 		else {
-			res.json({user: user});
+			req.login(user, function(err) {
+				if (err) {return res.json(err);}
+				return res.redirect('/user/' + user.username);
+			});
 		}
 	});
 };
 
 
-exports.login = function (req, res) {
-	function authenticate (username, password, next) {
+exports.login = function (req, res, done) {
+
+	var authenticate = function(username, password, next) {
 		console.log('username: ' + username);
 
 		UserModel.findOne({username: username, password: password}, function(err, user) {
 			if (err) {return next(err);}
-
 			if (!user) {
 				return next(err, false);
 			}
@@ -39,36 +42,30 @@ exports.login = function (req, res) {
 			return next(null, user);
 
 		});
-	}
+	};
 
-	authenticate(req.body.username, req.body.password, function (err, user) {
+	authenticate(req.body.username, req.body.password, function (err, user, options) {
+		if (err) {return done(err);}
 
-		req.login(user, function (err) {
-			console.log('req.user ' + req.user);
-			if (req.user !== null) {
-				res.send({success: false});
-				res.redirect('/login');
-			}
-		});
+
+		req.login(user, function(err) {
+				if (err) {return res.json(err);}
+				//console.log(2, 'req.user: ' + req.user);
+				return res.redirect('/user/' + user.username);
+
+			});
 	});
+
 };
 
-exports.getLogin = function (req, res) {
-	console.log('req.user: ' + req.user);
+exports.getLogin = function (req, res, next) {
 
-	if (req.user) {
-		return res.send({successful: true, user: req.user});
-	}
+	res.sendfile('views/login.html');
 
-	res.send({success: false, message: 'Not authorized. Please, log in to see this page.'});
-	res.redirect('/login');
 };
-
-
-
 
 exports.findByName = function (req, res) {
-	console.log('name: ' + req.body.name);
+	console.log(66, 'name: ' + req.isAuthenticated());
 
 	UserModel.findOne({
 		name: req.body.name
@@ -82,5 +79,5 @@ exports.findByName = function (req, res) {
 
 exports.logout = function (req, res) {
 	req.logout();
-	res.json('Logged out!');
+	res.redirect('/login');
 };

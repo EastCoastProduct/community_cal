@@ -5,7 +5,8 @@ var express = require('express'),
 	mongoose = require('mongoose'),
 	cookieParser = require('cookie-parser'),
 	session = require('express-session'),
-	morgan = require('morgan');
+	morgan = require('morgan'),
+	passport = require('passport');
 
 //Create the Express app
 var app = express();
@@ -19,11 +20,11 @@ app.use(morgan('dev')); // log every request to the console
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(express.static(__dirname + '/views'));
+app.use(express.static(__dirname + '/views/'));
 
 //routes ======================================================================
-require('./routes/user.routes')(app);
-require('./routes/event.routes')(app);
+require('./routes/user.routes')(app, passport);
+require('./routes/event.routes')(app, passport);
 
 // Use the `PORT` environment variable, or port 3000
 var port = process.env.PORT || 3000;

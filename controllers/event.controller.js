@@ -15,6 +15,7 @@ exports.create = function (req, res) {
 };
 
 exports.list = function (req, res) {
+	console.log(121,req.isAuthenticated());
 	EventModel.find(function (err, data) {
 		if (err) {return res.json(err);}
 

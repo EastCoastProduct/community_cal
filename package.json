@@ -10,7 +10,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "body-parser": "^1.14.2",
-    "connect-flash": "~0.1.1",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "express-logger": "^0.0.3",

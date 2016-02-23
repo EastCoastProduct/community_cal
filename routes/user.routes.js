@@ -4,18 +4,19 @@ var mongoose = require('mongoose'),
 
 	UserModel = require('../models/model.user'),
 	users = require('../controllers/user.controller'),
+	auth = require('../middleware/authentication'),
 
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	cookieParser = require('cookie-parser'),
-	session = require('express-session');
+	session = require('express-session'),
+	path = require('path'),
+	flash = require('connect-flash');
 
 
-module.exports = function (app) {
 
-	//initialize passport
-	app.use(passport.initialize());
-	app.use(passport.session());
+module.exports = function (app, passport) {
+
 
 	//passport.use(new LocalStrategy(UserModel.authenticate()));
 	passport.use(UserModel.createStrategy()); //first this
@@ -31,24 +32,28 @@ module.exports = function (app) {
 		resave: true
 	}));
 
-	//routes
+	//initialize passport
+	app.use(passport.initialize());
+	app.use(passport.session());
 
-	app.route('/register')
-		.get(function (req, res) {
+	app.use(flash());
+
+	//routes
+	app.get('/register', function (req, res) {
 			res.sendfile('views/register.html');
 		})
-		.post(users.register);
+		.post('/register', users.register);
 
-	app.route('/login')
-		.get(function (req, res) {
-			res.sendfile('views/login.html');
-		})
-		.post(users.login);
-	//app.route('/login').get(users.getLogin);
-	app.route('/user/:name')
-		.get(users.findByName);
-	app.route('/logout')
-		.get(users.logout);
+	// app.get('/login', function (req, res, next) {
+	// 		res.sendfile('views/login.html');
+	// 		next();
+	// 	})
+	app.post('/login', users.login)
+		.get('/login', users.getLogin);
+
+	app.get('/user/:name', auth.ensureAuthenticated, users.findByName);
+
+	app.get('/logout', users.logout);
+
 	//app.route('/user/:id').get(users.getById);
-
 };
