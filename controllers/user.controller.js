@@ -17,7 +17,7 @@ exports.register = function (req, res) {
 		else {
 			req.login(user, function(err) {
 				if (err) {return res.json(err);}
-				return res.redirect('/user/' + user.username);
+				return res.redirect('/users/' + user.username);
 			});
 		}
 	});
@@ -51,7 +51,7 @@ exports.login = function (req, res, done) {
 		req.login(user, function(err) {
 				if (err) {return res.json(err);}
 				//console.log(2, 'req.user: ' + req.user);
-				return res.redirect('/user/' + user.username);
+				return res.redirect('/users/' + user.username);
 
 			});
 	});
@@ -65,7 +65,7 @@ exports.getLogin = function (req, res, next) {
 };
 
 exports.findByName = function (req, res) {
-	console.log(66, 'name: ' + req.isAuthenticated());
+	//console.log(66, 'name: ' + req.isAuthenticated());
 
 	UserModel.findOne({
 		name: req.body.name

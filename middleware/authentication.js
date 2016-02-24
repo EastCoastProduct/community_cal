@@ -7,5 +7,5 @@ exports.ensureAuthenticated =	function (req, res, next) {
 		return next();
 	}
 
-	res.json({ message: 'Not authorized. Please, log in to see this page.' });
+	res.json({ message: 'Not authorized. Please, log in!' });
 };

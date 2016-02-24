@@ -15,7 +15,7 @@ exports.create = function (req, res) {
 };
 
 exports.list = function (req, res) {
-	console.log(121,req.isAuthenticated());
+	//console.log(121,req.isAuthenticated());
 	EventModel.find(function (err, data) {
 		if (err) {return res.json(err);}
 
@@ -37,7 +37,7 @@ exports.remove = function(req, res) {
 
 	EventModel.findById({_id: req.params.id}, function(err, event) {
 		event.remove(function (err) {
-			if (err) {return res.send({error: err, success:false});}
+			if (err) {return res.json({error: err, success:false});}
 
 			res.json({success: true, message: 'Event removed'});
 			});

@@ -51,7 +51,7 @@ module.exports = function (app, passport) {
 	app.post('/login', users.login)
 		.get('/login', users.getLogin);
 
-	app.get('/user/:name', auth.ensureAuthenticated, users.findByName);
+	app.get('/users/:name', auth.ensureAuthenticated, users.findByName);
 
 	app.get('/logout', users.logout);
 

@@ -1,20 +1,19 @@
 'use strict';
 
+var users = require('../controllers/user.controller'),
+	auth = require('../middleware/authentication'),
+	events = require('../controllers/event.controller');
+
 module.exports = function (app) {
-	var users = require('../controllers/user.controller');
-	var events = require('../controllers/event.controller');
-	//var EventModel = require('../models/model.event');
 
-	app.route('/event')
-		.post(events.create)
-		.get(events.list);
+	app.post('/events', events.create);
+	app.get('/events', events.list);
 
-	// app.route('/event/:name')
-	// 	.get(events.findByName);
+	// app.get('/event/:name', events.findByName);
 
-	app.route('/event/:id')
-		.get(events.findById);
-	app.route('/event/:id')
-		.delete(events.remove)
-		.put(events.edit);
+	app.get('/events/:id', events.findById);
+	app.put('/events/:id', events.edit);
+
+	app.delete('/events/:id', auth.ensureAuthenticated, events.remove);
+
 };
