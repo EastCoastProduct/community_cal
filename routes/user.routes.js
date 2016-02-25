@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 
 	UserModel = require('../models/model.user'),
 	users = require('../controllers/user.controller'),
-	auth = require('../middleware/authentication'),
+	auth = require('../controllers/auth.controller'),
 
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
@@ -39,21 +39,20 @@ module.exports = function (app, passport) {
 	app.use(flash());
 
 	//routes
-	app.get('/register', function (req, res) {
-			res.sendfile('views/register.html');
-		})
-		.post('/register', users.register);
 
-	// app.get('/login', function (req, res, next) {
-	// 		res.sendfile('views/login.html');
-	// 		next();
+	// app.get('/register', function (req, res) {
+	// 		res.sendfile('views/register.html');
 	// 	})
-	app.post('/login', users.login)
-		.get('/login', users.getLogin);
+	// 	.post('/register', users.register);
 
-	app.get('/users/:name', auth.ensureAuthenticated, users.findByName);
+	app.get('/login', function (req, res) {
+		res.sendfile('views/login.html');
+		})
+		.post('/login', users.login);
 
 	app.get('/logout', users.logout);
 
-	//app.route('/user/:id').get(users.getById);
+	//for multiple users
+	// app.get('/users/:name', auth.ensureAuthenticated, users.findByName);
+	// app.get('/user/:id', auth.ensureAuthenticated, users.getById);
 };
