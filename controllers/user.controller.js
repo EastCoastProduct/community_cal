@@ -34,9 +34,9 @@ exports.login = function (req, res, done) {
 			if (!user) {
 				return next(err, false);
 			}
-			if (user.password !== password) {
-				return next(err, false);
-			}
+			// if (user.password !== password) {
+			// 	return next(err, false);
+			// }
 
 			//console.log('user: ' + user);
 			return next(null, user);
