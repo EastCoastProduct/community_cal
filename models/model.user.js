@@ -37,7 +37,7 @@ var UserSchema = new Schema ({
 	},
 	password: {
 		type: String,
-		min: 5,
+		min: 6,
 		required: true
 	},
 	name: {
@@ -53,6 +53,16 @@ var UserSchema = new Schema ({
 		default: Date.now
 	}
 });
+
+//encrypting passwords
+UserSchema.pre('save', function(next) {
+	if (!this.isModified('password')) {
+		return next();
+	}
+	this.password = UserSchema.encryptPassword(this.password);
+	next();
+});
+
 
 //alternative way of handling errors
 //userModel.path('name').required(true, 'Oops! Name is required!');

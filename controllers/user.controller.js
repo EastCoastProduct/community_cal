@@ -14,11 +14,12 @@ exports.register = function (req, res) {
 		password: req.body.password,
 		name: req.body.name
 	}), function (err, user) {
-		if (err) {return res.json(err);}
+		if (err) {return res.status(400).json({error: err});}
 		else {
+			res.status(201).json(user);
 			req.login(user, function(err) {
-				if (err) {return res.json(err);}
-				return res.redirect('/events');
+				if (err) {return res.status(400).json({error: err});}
+				return res.status(200).json({user: user});
 			});
 		}
 	});
@@ -26,7 +27,7 @@ exports.register = function (req, res) {
 
 exports.registrationForm = function (req, res) {
 	res.sendFile('register.html', {root: path.join (__dirname, '../views')}, function (err) {
-		if (err) {res.json (err);}
+		if (err) {res.json ({error: err});}
 	});
 };
 
@@ -51,11 +52,9 @@ exports.login = function (req, res, done) {
 
 		req.login(user, function(err) {
 			//console.log('req.user: ' + req.user);
-			if (err) {return res.json(err);}
+			if (err) {return res.json({error: err});}
 			//console.log('Authenticated: ' + req.isAuthenticated())
-			//console.log(33, user);
-
-			return res.redirect('/events/');
+			return res.status(200).json({user: user});
 
 		});
 	});
@@ -63,7 +62,7 @@ exports.login = function (req, res, done) {
 
 exports.loginForm = function (req, res) {
 	res.sendFile('login.html', {root: path.join (__dirname, '../views')}, function (err) {
-		if (err) {res.json (err);}
+		if (err) {res.status(400).json({error: err});}
 	});
 };
 
@@ -84,12 +83,13 @@ exports.logout = function (req, res) {
 };
 
 exports.findUserById = function (req, res) {
-	console.log(555, req.params.id);
+	//console.log(555, req.params.id);
 
 	UserModel.findOne({_id: req.params.id}, function (err, user) {
-		if (err || !user) {return res.json({success:false, error: err});}
+		if (err) {return res.status(400).json({error: err});}
+		if (!user) {return res.status(404).json({error: err});}
 
-		res.json({success: true, user: user});
+		res.status(200).json({user: user});
 	});
 };
 
@@ -98,10 +98,9 @@ exports.getEventsByUserId = function (req, res) {
 
 	EventModel.findByUserId({userid: req.user._id}, function(err, event) {
 
-		if (err) {return res.json({error: err, success:false});}
+		if (err) {return res.status(400).json({error: err});}
 
-		res.json({success: true, event: event});
-		console.log(55, event);
+		res.status(200).json({event: event});
 				//res.redirect('/events');
 		});
 };

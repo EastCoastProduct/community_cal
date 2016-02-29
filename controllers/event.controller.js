@@ -25,7 +25,7 @@ exports.list = function (req, res) {
 
 	query.sort({startDate: 'desc'})
 		.exec(function (err, event) {
-			if (err) {return res.json(err);}
+			if (err) {return res.status(400).json(err);}
 			res.status(200).json({event: event});
 		});
 };
@@ -34,10 +34,10 @@ exports.list = function (req, res) {
 exports.findById = function (req, res) {
 
 	EventModel.findOne({_id: req.params.id}, function (err, event) {
-		if (err) {return res.json({error: err});}
+		if (err) {return res.status(400).json({error: err});}
 		if (!event) {return res.status(404).json({message: 'Event not found'});
 	}
-		res.json({success: true, event: event});
+		res.status(200).json({event: event});
 	});
 };
 
@@ -48,8 +48,8 @@ exports.remove = function(req, res) {
 
 		if (event.userid === req.user._id || req.user.role === 'admin') {
 			event.remove(function (err) {
-				if (err) {return res.json({error: err, success:false});}
-				res.json({success: true, message: 'Event removed'});
+				if (err) {return res.status(400).json({error: err});}
+				res.status(204).json({message: 'Event removed'});
 			});
 		}
 		else {
