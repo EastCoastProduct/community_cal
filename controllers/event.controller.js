@@ -22,7 +22,7 @@ exports.create = function (req, res) {
 exports.list = function (req, res) {
 	//console.log('authenticated: ', req.isAuthenticated());
 	var query = EventModel.find();
-	console.log(55, req.user);
+
 	query.sort({startDate: 'desc'})
 		.exec(function (err, event) {
 			if (err) {return res.json(err);}
@@ -63,17 +63,14 @@ exports.edit = function (req, res) {
 	EventModel.findOne({_id: req.params.id}, function(err, event) {
 		if (err) {return res.json({error: err});}
 
+		if (event.userid === req.user._id || req.user.role === 'admin') {
 			for (var prop in req.body) {
 				event[prop] = req.body[prop];
 			}
-
-		if (!users.getLogin) {res.json('Please, log in!');}
-		else {
 			event.save(function (err) {if (err) {return res.json({error: err});}});
 			res.json({success: true, message: 'Updated the Event', event: event});
 		}
-		});
-
+	});
 };
 
 exports.findByName = function (req, res) {
