@@ -30,11 +30,18 @@ var EventSchema = new Schema({
 		required: true,
 		//validate: alphanumLenValidator
 	},
-	//start_date: {type: Date, required: true, default: now}
-	//end_date: {type: Date, required: true, default: now.setHours(now.getHours() + 1);}
+	// startDate: {
+	// 	type: Date, required: true, default: now
+	// },
+	// endDate: {
+	// 	type: Date, required: true, default: now.setHours(now.getHours() + 1)
+	// },
 	createdOn: {
 		type: Date,
 		default: Date.now
+	},
+	userid: {
+		type: String
 	}
 });
 

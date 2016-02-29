@@ -4,7 +4,12 @@ var EventModel = require('../models/model.event');
 var users = require('../controllers/user.controller');
 
 exports.create = function (req, res) {
-	var event = new EventModel(req.body);
+	console.log(66, req.user);
+	var event = new EventModel({
+		title: req.body.title,
+		description: req.body.description,
+		userid: req.user._id
+	});
 	//console.log(event);
 
 	event.save(function (err) {
@@ -16,20 +21,22 @@ exports.create = function (req, res) {
 
 exports.list = function (req, res) {
 	//console.log('authenticated: ', req.isAuthenticated());
-	EventModel.find(function (err, data) {
-		if (err) {return res.json(err);}
-
-		res.json({success: true, event: data});
-	});
+	var query = EventModel.find();
+	console.log(55, req.user);
+	query.sort({startDate: 'desc'})
+		.exec(function (err, event) {
+			if (err) {return res.json(err);}
+			res.json({success: true, event: event});
+		});
 };
 
 
 exports.findById = function (req, res) {
-	
-	EventModel.findOne({_id: req.params.id}, function (err, response) {
-		if (err || !response) {return res.json({success: false, message: 'Event not found'});
+
+	EventModel.findOne({_id: req.params.id}, function (err, event) {
+		if (err || !event) {return res.json({success: false, message: 'Event not found'});
 	}
-		res.json({success: true, event: response});
+		res.json({success: true, event: event});
 	});
 };
 
@@ -37,11 +44,17 @@ exports.remove = function(req, res) {
 	//console.log(req.params.id);
 
 	EventModel.findById({_id: req.params.id}, function(err, event) {
-		event.remove(function (err) {
-			if (err) {return res.json({error: err, success:false});}
+		if (event.userid === req.user._id || req.user.role === 'admin') {
+			event.remove(function (err) {
+				if (err) {return res.json({error: err, success:false});}
 
-			res.json({success: true, message: 'Event removed'});
-			});
+				res.json({success: true, message: 'Event removed'});
+				//res.redirect('/events');
+				});
+			}
+			else {
+				res.json({success: false, message: 'Not authorized'});
+			}
 	});
 };
 
@@ -64,9 +77,9 @@ exports.edit = function (req, res) {
 };
 
 exports.findByName = function (req, res) {
-	EventModel.findById({name: req.params.name}, function (err, response) {
-			if (err || !response) {res.json({message: 'Event not found'});
+	EventModel.findById({name: req.params.name}, function (err, event) {
+			if (err || !event) {res.json({message: 'Event not found'});
 			}
-			res.json({success: true, event: response});
+			res.json({success: true, event: event});
 		});
 };

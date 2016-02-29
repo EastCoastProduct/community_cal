@@ -7,7 +7,7 @@ var users = require('../controllers/user.controller'),
 module.exports = function (app) {
 
 	app.get('/events', events.list)
-		.post('/events', events.create);
+		.post('/events', auth.ensureAuthenticated, events.create);
 
 	app.get('/events/:id', events.findById);
 

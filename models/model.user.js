@@ -44,6 +44,10 @@ var UserSchema = new Schema ({
 		type: String,
 		validate: namesValidator
 	},
+	role: {
+		type: String,
+		default: 'user'
+	},
 	createdOn: {
 		type: Date,
 		default: Date.now

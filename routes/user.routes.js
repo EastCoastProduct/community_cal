@@ -10,7 +10,6 @@ var mongoose = require('mongoose'),
 	LocalStrategy = require('passport-local').Strategy,
 	cookieParser = require('cookie-parser'),
 	session = require('express-session'),
-	path = require('path'),
 	flash = require('connect-flash');
 
 
@@ -40,19 +39,14 @@ module.exports = function (app, passport) {
 
 	//routes
 
-	// app.get('/register', function (req, res) {
-	// 		res.sendfile('views/register.html');
-	// 	})
-	// 	.post('/register', users.register);
+	app.get('/register', users.registrationForm)
+		.post('/register', users.register);
 
-	app.get('/login', function (req, res) {
-		res.sendfile('views/login.html');
-		})
+	app.get('/login', users.loginForm)
 		.post('/login', users.login);
 
 	app.get('/logout', users.logout);
 
-	//for multiple users
-	// app.get('/users/:name', auth.ensureAuthenticated, users.findByName);
-	// app.get('/user/:id', auth.ensureAuthenticated, users.getById);
+	//app.get('/users/:name', auth.ensureAuthenticated, users.findByName);
+	//app.get('/users/:id', auth.ensureAuthenticated, users.getById);
 };
