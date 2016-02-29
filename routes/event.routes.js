@@ -14,5 +14,5 @@ module.exports = function (app) {
 	app.put('/events/:id', auth.ensureAuthenticated, events.edit)
 		.delete('/events/:id', auth.ensureAuthenticated, events.remove);
 
-	// app.get('/event/:name', events.findByName);
+	app.get('/event/:name', events.findEventByName);
 };

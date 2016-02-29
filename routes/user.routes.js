@@ -47,6 +47,8 @@ module.exports = function (app, passport) {
 
 	app.get('/logout', users.logout);
 
-	//app.get('/users/:name', auth.ensureAuthenticated, users.findByName);
-	//app.get('/users/:id', auth.ensureAuthenticated, users.getById);
+	app.get('/users/:id', users.findUserById);
+	//app.get('/users/:username', users.findByUsername);
+
+	app.get('/users/events', users.getEventsByUserId);
 };
