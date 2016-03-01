@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 var namesValidator = [
 	validate({
 		validator: 'isLength',
-		arguments: [3,50],
+		arguments: [3,45],
 		message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters'
 	}),
 	validate({
@@ -55,13 +55,13 @@ var UserSchema = new Schema ({
 });
 
 //encrypting passwords
-UserSchema.pre('save', function(next) {
-	if (!this.isModified('password')) {
-		return next();
-	}
-	this.password = UserSchema.encryptPassword(this.password);
-	next();
-});
+// UserSchema.pre('save', function(next) {
+// 	if (!this.isModified('password')) {
+// 		return next();
+// 	}
+// 	this.password = UserSchema.encryptPassword(this.password);
+// 	next();
+// });
 
 
 //alternative way of handling errors
