@@ -50,5 +50,5 @@ module.exports = function (app, passport) {
 	app.get('/users/:id', users.findUserById);
 	//app.get('/users/:username', users.findByUsername);
 
-	app.get('/users/events', users.getEventsByUserId);
+	app.get('/users/events/:userid', users.getEventsByUserId);
 };

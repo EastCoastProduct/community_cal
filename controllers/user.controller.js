@@ -96,10 +96,9 @@ exports.findUserById = function (req, res) {
 	});
 };
 
-
 exports.getEventsByUserId = function (req, res) {
-
-	EventModel.findByUserId({userid: req.user._id}, function(err, event) {
+	//console.log(33, req.params.userid);
+	EventModel.find({userid: req.params.userid}, function(err, event) {
 		if (err) {return res.status(400).json({error: err});}
 		return res.status(200).json({event: event});
 		});
