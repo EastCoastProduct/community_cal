@@ -20,7 +20,7 @@ app.use(morgan('dev')); // log every request to the console
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(express.static(__dirname + '/views/'));
+app.use(express.static(__dirname + '/public'));
 
 //routes ======================================================================
 require('./routes/user.routes')(app, passport);

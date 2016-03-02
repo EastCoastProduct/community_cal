@@ -7,7 +7,7 @@ var superagent = require('superagent'),
 	expect = chai.expect,
 	port = 8000;
 
-describe('Testing the events begins...', function () {
+describe('Testing the events...', function () {
 	var id;
 
 	it('GET /events - returns a JSON array of events', function(done) {

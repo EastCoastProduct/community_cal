@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose'),
 
-	UserModel = require('../models/model.user'),
+	UserSchema = require('../models/model.user'),
 	users = require('../controllers/user.controller'),
 	auth = require('../controllers/auth.controller'),
 
@@ -10,19 +10,17 @@ var mongoose = require('mongoose'),
 	LocalStrategy = require('passport-local').Strategy,
 	cookieParser = require('cookie-parser'),
 	session = require('express-session'),
-	flash = require('connect-flash');
-
-
+	flash = require('connect-flash'),
+	User = mongoose.model('User');
 
 module.exports = function (app, passport) {
 
-
-	//passport.use(new LocalStrategy(UserModel.authenticate()));
-	passport.use(UserModel.createStrategy()); //first this
+	//passport.use(User.createStrategy()); //first this
+	passport.use(new LocalStrategy(User.authenticate()));
 
 	//static serialize and deserialize of model for passport session support
-	passport.serializeUser(UserModel.serializeUser());
-	passport.deserializeUser(UserModel.deserializeUser());
+	passport.serializeUser(User.serializeUser());
+	passport.deserializeUser(User.deserializeUser());
 
 	app.use(cookieParser());
 	app.use(session({

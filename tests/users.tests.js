@@ -1,18 +1,19 @@
 'use strict';
 
-// import the moongoose helper utilities
 var superagent = require('superagent'),
+	agent = superagent.agent(),
 	chai = require('chai'),
 	expect = chai.expect,
 	port = 8000;
 
-describe('Testing the users begins...', function () {
+describe('Testing the users...', function () {
 	var id;
 
 	it('GET /register form', function(done) {
 		superagent.get('http://localhost:' + port + '/register')
 		.end(function(err, res) {
 			expect(err).to.equal(null);
+			expect(res.type).to.equal('text/html');
 			done();
 		});
 	});
@@ -28,7 +29,7 @@ describe('Testing the users begins...', function () {
 			//console.log(44, res.body);
 			expect(err).to.equal(null);
 			expect(res.body).to.be.an('object');
-			expect(res.status).to.equal(201);
+			expect(res.status).to.equal(200);
 			expect(res.body.user._id).to.not.equal(null);
 			expect(res.body.user.role).to.be.equal('user');
 			id = res.body.user._id;
@@ -84,20 +85,33 @@ describe('Testing the users begins...', function () {
 			expect(res.status).to.equal(200);
 			expect(res.body.user._id).to.not.equal(null);
 			expect(res.body.user.username).to.equal('ana@example.com');
-			expect(res.body.user.password).to.equal('password22');
 			expect(res.body.user.role).to.equal('user');
 			done();
 		});
 	});
-});
+
 
 
 	it('GET logout /logout', function(done) {
 		superagent.get('http://localhost:' + port + '/logout')
 		.end(function(err, res) {
 			expect(err).to.equal(null);
-			expect(res.status).to.not.equal(null);
-			//expect(res.user.isAuthenticated()).to.equal(false);
+			expect(res.body.message).to.equal('Logging out...');
 			done();
 		});
 	});
+
+	it('POST a wrong username /login', function(done) {
+		superagent.post('http://localhost:' + port + '/login')
+		.send({
+			username: 'anaana@example.com',
+			password: 'password22',
+		})
+		.end(function(err, res) {
+			//console.log(66, res.body);
+			expect(err).to.equal(null);
+			done();
+		});
+	});
+
+});
